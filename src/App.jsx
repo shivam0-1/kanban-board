@@ -1,45 +1,91 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Column from "./components/Column";
-import AddTaskForm from "./components/AddTaskForm";
+import TaskModal from "./components/TaskModal";
+const STORAGE_KEY = "kanban-tasks";
+
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Design homepage",
-      description: "Create wireframes in figma",
-      priority: "medium",
-      status: "todo",
-    },
-    {
-      id: 2,
-      title: "Set up Databse",
-      description: "Configure MongoDB schema",
-      priority: "high",
-      status: "in-progress",
-    },
-    {
-      id: 3,
-      title: "Write ReadME",
-      description: "Document setup instructions",
-      priority: "low",
-      status: "done",
-    },
-  ]);
-  function handleAddTask(newTask) {
-    setTasks([...tasks, newTask]);
+  const [tasks, setTasks] = useState(() => {
+    let saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [isModalOpen, setIsModelOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+  }, [tasks]);
+
+  // function handleAddTask(newTask) {
+  //   setTasks([...tasks, newTask]);
+  // }
+
+  function handleOpenAddModal() {
+    setEditingTask(null);
+    setIsModelOpen(true);
+  }
+
+  function handleOpenEditModal(task) {
+    setEditingTask(task);
+    setIsModelOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsModelOpen(false);
+    setEditingTask(null);
+  }
+
+  function handleSaveTask(task) {
+    if (editingTask) {
+      setTasks(tasks.map((t) => (t.id === task.id ? task : t)));
+    } else {
+      setTasks([...tasks, task]);
+    }
+    handleCloseModal();
+  }
+
+  function handleDeleteTask(id) {
+    setTasks(tasks.filter((t) => t.id !== id));
   }
   return (
     <div className="min-h-screen bg-gray-100 p-4">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">Kanban Board</h1>
-      <AddTaskForm onAddTask={handleAddTask} />
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold text-gray-800">Kanban Board</h1>
+
+        <button
+          onClick={handleOpenAddModal}
+          className="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700"
+        >
+          +Add New Task
+        </button>
+      </div>
+
       <div className="flex flex-col md:flex-row gap-4">
-        <Column title="Todo" tasks={tasks.filter((t) => t.status === "todo")} />
+        <Column
+          title="todo"
+          tasks={tasks.filter((t) => t.status === "todo")}
+          onEdit={handleOpenEditModal}
+          onDelete={handleDeleteTask}
+        />
         <Column
           title="In Progress"
           tasks={tasks.filter((t) => t.status === "in-progress")}
+          onEdit={handleOpenEditModal}
+          onDelete={handleDeleteTask}
         />
-        <Column title="Done" tasks={tasks.filter((t) => t.status === "done")} />
+        <Column
+          title="Done"
+          tasks={tasks.filter((t) => t.status === "done")}
+          onEdit={handleOpenEditModal}
+          onDelete={handleDeleteTask}
+        />
       </div>
+      <TaskModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSaveTask}
+        taskToEdit={editingTask}
+      />
     </div>
   );
 }

@@ -1,10 +1,10 @@
 const priorityColors = {
-  low: "bg-green-100 text-green-700",
-  medium: "bg-yellow-100 text-yellow-700",
-  high: "bg-red-100 text-red-700",
+  low: "bg-green-500 text-white-700",
+  medium: "bg-yellow-500 text-white-700",
+  high: "bg-red-500 text-white-700",
 };
 
-function TaskCard({ task }) {
+function TaskCard({ task, onEdit, onDelete }) {
   return (
     <div className="bg-gray-50 border rounded p-2">
       <div className="flex justify-between items-start">
@@ -22,6 +22,18 @@ function TaskCard({ task }) {
       {task.description && (
         <p className="text-sm text-gray-500 mt-1">{task.description}</p>
       )}
+
+      <div className="flex gap-2 mt-2">
+        <button onClick={() => onEdit(task)} className="text-sm text-blue-700">
+          Edit
+        </button>
+        <button
+          onClick={() => onDelete(task.id)}
+          className="text-sm text-red-600"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 }
