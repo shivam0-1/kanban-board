@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Column from "./components/Column";
 import TaskModal from "./components/TaskModal";
 const STORAGE_KEY = "kanban-tasks";
@@ -11,6 +11,13 @@ function App() {
 
   const [isModalOpen, setIsModelOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((t) =>
+      t.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [tasks, searchTerm]);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
@@ -59,23 +66,29 @@ function App() {
           +Add New Task
         </button>
       </div>
-
+      <input
+        type="text"
+        placeholder="Search tasks by title"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="border rounded px-3 py-2 w-full mb-4"
+      />
       <div className="flex flex-col md:flex-row gap-4">
         <Column
           title="todo"
-          tasks={tasks.filter((t) => t.status === "todo")}
+          tasks={filteredTasks.filter((t) => t.status === "todo")}
           onEdit={handleOpenEditModal}
           onDelete={handleDeleteTask}
         />
         <Column
           title="In Progress"
-          tasks={tasks.filter((t) => t.status === "in-progress")}
+          tasks={filteredTasks.filter((t) => t.status === "in-progress")}
           onEdit={handleOpenEditModal}
           onDelete={handleDeleteTask}
         />
         <Column
           title="Done"
-          tasks={tasks.filter((t) => t.status === "done")}
+          tasks={filteredTasks.filter((t) => t.status === "done")}
           onEdit={handleOpenEditModal}
           onDelete={handleDeleteTask}
         />
