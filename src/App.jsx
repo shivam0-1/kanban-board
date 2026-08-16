@@ -99,7 +99,7 @@ function App() {
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex flex-col md:flex-row gap-4">
           <Column
-            title="todo"
+            title="Todo"
             status="todo"
             tasks={filteredTasks.filter((t) => t.status === "todo")}
             onEdit={handleOpenEditModal}

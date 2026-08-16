@@ -35,7 +35,7 @@ No backend was required for this project, and Local Storage is the simplest way 
 ## 5. Challenges faced
 
 - Getting drag-and-drop working meant switching from `react-beautiful-dnd` (deprecated) to `@hello-pangea/dnd`, its maintained fork.
-- Had a bug early on where deleting a task inside a `useCallback` used stale data — fixed by using the functional update form (`setTasks(prev => ...)`) instead of referencing `tasks` directly.
+
 - Getting the modal to reset properly between "Add" and "Edit" (so old data didn't linger) needed a `useEffect` synced to when the modal opens.
 
 ## 6. Future improvements
@@ -66,5 +66,4 @@ Would add a login page (email/password or OAuth), store a session token, and sen
 ## 10. Open questions
 
 - Should deleted tasks be recoverable (soft delete) instead of gone immediately?
-- Should search also match description text, not just title?
 - At what task count would Local Storage start being a real limitation?

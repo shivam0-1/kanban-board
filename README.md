@@ -23,7 +23,7 @@ A simple Kanban board built from scratch with React, Tailwind CSS, and Local Sto
 ## Getting started
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/kanban-board.git
+git clone https://github.com/shivam-0-1/kanban-board.git
 cd kanban-board
 npm install
 npm run dev
@@ -35,8 +35,8 @@ Then open the URL shown in your terminal (usually `http://localhost:5173`).
 
 src/
 components/
-Column.jsx # one board column
-TaskCard.jsx # one task, with edit/delete buttons
+Column.jsx # board column
+TaskCard.jsx # task, with edit/delete buttons
 TaskModal.jsx # add/edit task form (modal)
 App.jsx # main state and layout
 

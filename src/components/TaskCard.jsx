@@ -29,10 +29,10 @@ function TaskCard({ task, onEdit, onDelete }) {
         )}
       </div>
 
-      <div className="flex justify-between mt-4 ">
+      <div className="flex justify-between mt-4">
         <button
           onClick={() => onEdit(task)}
-          className="text-sm   px-2  rounded text-green-900 font-bold outline "
+          className="text-sm   px-2  rounded text-green-900 font-bold outline"
         >
           Edit
         </button>
