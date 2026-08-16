@@ -1,16 +1,45 @@
-# React + Vite
+# Kanban Board
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple Kanban board built from scratch with React, Tailwind CSS, and Local Storage. No backend — everything is saved in your browser.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Add, edit, and delete tasks
+- Three columns: Todo, In Progress, Done
+- Drag and drop tasks between columns
+- Set task priority (low / medium / high)
+- Search tasks by title
+- Data persists after refresh (Local Storage)
+- Responsive layout (stacks on mobile, side-by-side on desktop)
 
-## React Compiler
+## Tech stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React (Vite)
+- JavaScript
+- Tailwind CSS
+- Local Storage
+- @hello-pangea/dnd (drag and drop)
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/YOUR-USERNAME/kanban-board.git
+cd kanban-board
+npm install
+npm run dev
+```
+
+Then open the URL shown in your terminal (usually `http://localhost:5173`).
+
+## Project structure
+
+src/
+components/
+Column.jsx # one board column
+TaskCard.jsx # one task, with edit/delete buttons
+TaskModal.jsx # add/edit task form (modal)
+App.jsx # main state and layout
+
+## Notes
+
+See `decisions.md` for the reasoning behind the technical choices made in this project (state management, Local Storage, folder structure, and what would change for production).
