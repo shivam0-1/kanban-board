@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { DragDropContext } from "@hello-pangea/dnd";
 import Column from "./components/Column";
 import TaskModal from "./components/TaskModal";
 const STORAGE_KEY = "kanban-tasks";
@@ -19,6 +20,28 @@ function App() {
     );
   }, [tasks, searchTerm]);
 
+  function handleDragEnd(result) {
+    const { source, destination, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    ) {
+      return;
+    }
+
+    setTasks((prev) => {
+      return prev.map((task) => {
+        return task.id === Number(draggableId)
+          ? { ...task, status: destination.droppableId }
+          : task;
+      });
+    });
+  }
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
   }, [tasks]);
@@ -73,26 +96,31 @@ function App() {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="border rounded px-3 py-2 w-full mb-4"
       />
-      <div className="flex flex-col md:flex-row gap-4">
-        <Column
-          title="todo"
-          tasks={filteredTasks.filter((t) => t.status === "todo")}
-          onEdit={handleOpenEditModal}
-          onDelete={handleDeleteTask}
-        />
-        <Column
-          title="In Progress"
-          tasks={filteredTasks.filter((t) => t.status === "in-progress")}
-          onEdit={handleOpenEditModal}
-          onDelete={handleDeleteTask}
-        />
-        <Column
-          title="Done"
-          tasks={filteredTasks.filter((t) => t.status === "done")}
-          onEdit={handleOpenEditModal}
-          onDelete={handleDeleteTask}
-        />
-      </div>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <div className="flex flex-col md:flex-row gap-4">
+          <Column
+            title="todo"
+            status="todo"
+            tasks={filteredTasks.filter((t) => t.status === "todo")}
+            onEdit={handleOpenEditModal}
+            onDelete={handleDeleteTask}
+          />
+          <Column
+            title="In Progress"
+            status="in-progress"
+            tasks={filteredTasks.filter((t) => t.status === "in-progress")}
+            onEdit={handleOpenEditModal}
+            onDelete={handleDeleteTask}
+          />
+          <Column
+            title="Done"
+            status="done"
+            tasks={filteredTasks.filter((t) => t.status === "done")}
+            onEdit={handleOpenEditModal}
+            onDelete={handleDeleteTask}
+          />
+        </div>
+      </DragDropContext>
       <TaskModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

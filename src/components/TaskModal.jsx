@@ -45,30 +45,45 @@ function TaskModel({ isOpen, onClose, onSave, taskToEdit }) {
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input
-            type="text"
-            placeholder="Task title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border rounded px-2 py-1"
-            autoFocus
-          />
-          <textarea
-            className="border rounded px-2 py-1"
-            rows="3"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <select
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-            className="border rounded px-2 py-1"
-          >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="task-title" className="text-sm text-gray-600">
+              Title
+            </label>
+            <input
+              id="task-title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="border rounded px-2 py-1"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="task-description" className="text-sm text-gray-600">
+              Description
+            </label>
+            <textarea
+              id="task-description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="border rounded px-2 py-1"
+              rows="3"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="task-priority" className="text-sm text-gray-600">
+              Priority
+            </label>
+            <select
+              id="task-priority"
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              className="border rounded px-2 py-1"
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
 
           <div className="flex justify-end gap-2 mt-2">
             <button
