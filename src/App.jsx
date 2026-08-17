@@ -10,7 +10,7 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
 
-  const [isModalOpen, setIsModelOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -46,22 +46,18 @@ function App() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
   }, [tasks]);
 
-  // function handleAddTask(newTask) {
-  //   setTasks([...tasks, newTask]);
-  // }
-
   function handleOpenAddModal() {
     setEditingTask(null);
-    setIsModelOpen(true);
+    setIsModalOpen(true);
   }
 
   function handleOpenEditModal(task) {
     setEditingTask(task);
-    setIsModelOpen(true);
+    setIsModalOpen(true);
   }
 
   function handleCloseModal() {
-    setIsModelOpen(false);
+    setIsModalOpen(false);
     setEditingTask(null);
   }
 
@@ -80,11 +76,13 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold text-gray-800">Kanban Board</h1>
+        <h1 className="text-2xl font-bold text-gray-800">
+          Kanban Task Management Board
+        </h1>
 
         <button
           onClick={handleOpenAddModal}
-          className="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700"
+          className="bg-blue-600 text-white rounded font-bold px-4 py-2 hover:bg-blue-800"
         >
           +Add New Task
         </button>

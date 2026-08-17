@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function TaskModel({ isOpen, onClose, onSave, taskToEdit }) {
+function TaskModal({ isOpen, onClose, onSave, taskToEdit }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("medium");
@@ -106,4 +106,4 @@ function TaskModel({ isOpen, onClose, onSave, taskToEdit }) {
   );
 }
 
-export default TaskModel;
+export default TaskModal;
